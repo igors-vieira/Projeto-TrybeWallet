@@ -143,7 +143,10 @@ render() {
               <td>{ Number(gasto.value).toFixed(2) }</td>
               <td>{ gasto.exchangeRates[gasto.currency].name }</td>
               <td>{ Number(gasto.exchangeRates[gasto.currency].ask).toFixed(2) }</td>
-              <td>{ gasto.exchangeRates[gasto.currency].ask * gasto.value }</td>
+              <td>
+                { Number(gasto.exchangeRates[gasto.currency]
+                  .ask * gasto.value).toFixed(2) }
+              </td>
               <td>Real</td>
               <td>{ false }</td>
             </tr>
