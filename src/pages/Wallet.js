@@ -77,7 +77,7 @@ render() {
         <label htmlFor="moeda">
           Moeda
           <select onChange={ this.handleChange } value={ moeda } id="moeda">
-            <option value="" disabled selected hidden>Escolha Moeda</option>
+            <option value="" disabled hidden>Escolha Moeda</option>
             {moedas.map((coin, i) => (
               <option key={ i + coin }>
                 {coin}
@@ -92,7 +92,7 @@ render() {
             id="method"
             data-testid="method-input"
           >
-            <option value="" disabled selected hidden>Metodo de Pagamento</option>
+            <option value="" disabled hidden>Metodo de Pagamento</option>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -105,7 +105,7 @@ render() {
             id="tag"
             data-testid="tag-input"
           >
-            <option value="" disabled selected hidden>Escolha a Tag para Dispesa</option>
+            <option value="" disabled hidden>Escolha a Tag para Dispesa</option>
             { /* https://stackoverflow.com/questions/5805059/how-do-i-make-a-placeholder-for-a-select-box */ }
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
