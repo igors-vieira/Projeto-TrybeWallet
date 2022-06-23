@@ -104,9 +104,9 @@ render() {
             valeu={ tag }
             id="tag"
             data-testid="tag-input"
+            defaultValue="default"
           >
-            <option value="" disabled hidden>Escolha a Tag para Dispesa</option>
-            { /* https://stackoverflow.com/questions/5805059/how-do-i-make-a-placeholder-for-a-select-box */ }
+            <option value="default" disabled hidden>Escolha a Tag para Dispesa</option>
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>
@@ -122,6 +122,21 @@ render() {
           Adicionar despesa
         </button>
       </form>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Descrição</th>
+            <th scope="col">Tag</th>
+            <th scope="col">Método de pagamento</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Moeda</th>
+            <th scope="col">Câmbio utilizado</th>
+            <th scope="col">Valor convertido</th>
+            <th scope="col">Moeda de conversão</th>
+            <th scope="col">Editar/Excluir</th>
+          </tr>
+        </thead>
+      </table>
     </div>
   );
 }
