@@ -11,7 +11,6 @@ state = {
   method: '',
   moeda: '',
   tag: '',
-  id: 0,
 }
 
 componentDidMount() {
@@ -28,10 +27,10 @@ handleChange = ({ target }) => {
 }
 
 handleClick = () => {
-  const { dispatchExpenses } = this.props;
-  const { description, despesa, method, moeda, tag, id } = this.state;
+  const { dispatchExpenses, expenses } = this.props;
+  const { description, despesa, method, moeda, tag } = this.state;
   const objSave = {
-    id,
+    id: expenses.length,
     description,
     despesa,
     method,
@@ -39,18 +38,17 @@ handleClick = () => {
     tag,
   };
   dispatchExpenses(objSave);
-  this.setState((prev) => ({
-    id: prev.id + 1,
+  this.setState({
     description: '',
     despesa: 0,
     method: '',
     moeda: '',
     tag: '',
-  }));
+  });
 }
 
 render() {
-  const { moedas } = this.props;
+  const { moedas, expenses } = this.props;
   const { description, despesa, method, moeda, tag } = this.state;
   return (
     <div>
@@ -136,6 +134,21 @@ render() {
             <th scope="col">Editar/Excluir</th>
           </tr>
         </thead>
+        <tbody>
+          {expenses.map((gasto, i) => (
+            <tr key={ i }>
+              <td>{ gasto.description }</td>
+              <td>{ gasto.tag }</td>
+              <td>{ gasto.method }</td>
+              <td>{ Number(gasto.value).toFixed(2) }</td>
+              <td>{ gasto.exchangeRates[gasto.currency].name }</td>
+              <td>{ Number(gasto.exchangeRates[gasto.currency].ask).toFixed(2) }</td>
+              <td>{ gasto.exchangeRates[gasto.currency].ask * gasto.value }</td>
+              <td>Real</td>
+              <td>{ false }</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
@@ -149,6 +162,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   moedas: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 Wallet.propTypes = {
