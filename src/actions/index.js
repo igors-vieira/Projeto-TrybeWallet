@@ -1,4 +1,3 @@
-// Coloque aqui suas actions
 // salva email usuario
 export const VALIDATION_USER = 'VALIDATION_USER';
 
@@ -7,7 +6,16 @@ export const validationUser = (email) => ({
   email,
 });
 
-// moedas
+// DeleteAction
+
+export const DELETE_ACT = 'DELETE_ACT';
+
+export const deleteAction = (id) => ({
+  type: DELETE_ACT,
+  id,
+});
+
+// MoedasThunk
 
 export const CURRENCIES = 'CURRENCIES';
 

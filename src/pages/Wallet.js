@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { currenciesFetchThunk, expensesFetchThunk } from '../actions';
+import { currenciesFetchThunk, expensesFetchThunk, deleteAction } from '../actions';
 import Header from '../componets/Header';
 
 class Wallet extends React.Component {
@@ -45,6 +45,13 @@ handleClick = () => {
     moeda: '',
     tag: '',
   });
+}
+
+handleDelete = ({ target }) => {
+  const { id } = target;
+  const { dispatchDelete } = this.props;
+
+  dispatchDelete(id);
 }
 
 render() {
@@ -148,7 +155,16 @@ render() {
                   .ask * gasto.value).toFixed(2) }
               </td>
               <td>Real</td>
-              <td>{ false }</td>
+              <td>
+                <button
+                  onClick={ this.handleDelete }
+                  data-testid="delete-btn"
+                  type="button"
+                  id={ gasto.id }
+                >
+                  Deletar
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -161,6 +177,7 @@ render() {
 const mapDispatchToProps = (dispatch) => ({
   dispatchThunk: () => dispatch(currenciesFetchThunk()),
   dispatchExpenses: (payload) => dispatch(expensesFetchThunk(payload)),
+  dispatchDelete: (id) => dispatch(deleteAction(id)),
 });
 
 const mapStateToProps = (state) => ({
