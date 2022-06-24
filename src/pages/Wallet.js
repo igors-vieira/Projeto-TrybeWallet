@@ -142,8 +142,8 @@ render() {
           </tr>
         </thead>
         <tbody>
-          {expenses.map((gasto, i) => (
-            <tr key={ i }>
+          {expenses.map((gasto) => (
+            <tr key={ gasto.id }>
               <td>{ gasto.description }</td>
               <td>{ gasto.tag }</td>
               <td>{ gasto.method }</td>
