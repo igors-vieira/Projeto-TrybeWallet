@@ -1,13 +1,19 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { currenciesFetchThunk, expensesFetchThunk, deleteAction } from '../actions';
+import {
+  currenciesFetchThunk,
+  expensesFetchThunk,
+  deleteAction,
+  buttonEdit,
+  editAct,
+} from '../actions';
 import Header from '../componets/Header';
 
 class Wallet extends React.Component {
 state = {
   description: '',
-  despesa: 0,
+  despesa: '',
   method: '',
   moeda: '',
   tag: '',
@@ -28,22 +34,18 @@ handleChange = ({ target }) => {
 
 handleClick = () => {
   const { dispatchExpenses, expenses } = this.props;
-  const { description, despesa, method, moeda, tag } = this.state;
+  // const { description, despesa, method, moeda, tag } = this.state;
   const objSave = {
     id: expenses.length,
-    description,
-    despesa,
-    method,
-    moeda,
-    tag,
+    ...this.state,
   };
   dispatchExpenses(objSave);
   this.setState({
     description: '',
-    despesa: 0,
+    despesa: '',
     method: '',
     moeda: '',
-    tag: '',
+    tag: 'default',
   });
 }
 
@@ -54,14 +56,43 @@ handleDelete = ({ target }) => {
   dispatchDelete(id);
 }
 
+handleBtnEdit = ({ target }) => {
+  const { id } = target;
+  const { dispatchBtnEdit } = this.props;
+  dispatchBtnEdit(Number(id));
+}
+
+handleEdit = () => {
+  const { idToEdit, dispatchEditExpenses } = this.props;
+  const { description, despesa, method, moeda, tag } = this.state;
+  // const arrOfExpenses = expenses.filter((gasto) => gasto.id !== idToEdit);
+  const newIdEdited = {
+    id: idToEdit,
+    description,
+    value: despesa,
+    currency: moeda,
+    method,
+    tag,
+  };
+  dispatchEditExpenses(newIdEdited);
+  // this.setState({
+  //   description: '',
+  //   despesa: 0,
+  //   method: '',
+  //   moeda: '',
+  //   tag: 'default',
+  // });
+}
+
 render() {
-  const { moedas, expenses } = this.props;
+  const { moedas, expenses, editar } = this.props;
   const { description, despesa, method, moeda, tag } = this.state;
   return (
     <div>
       <Header />
       <form>
         <label htmlFor="despesa">
+          Valor
           <input
             onChange={ this.handleChange }
             data-testid="value-input"
@@ -71,6 +102,7 @@ render() {
           />
         </label>
         <label htmlFor="description">
+          Descrição
           <input
             onChange={ this.handleChange }
             data-testid="description-input"
@@ -85,7 +117,7 @@ render() {
             <option value="" disabled hidden>Escolha Moeda</option>
             {moedas.map((coin, i) => (
               <option key={ i + coin }>
-                {coin}
+                { coin }
               </option>
             ))}
           </select>
@@ -119,13 +151,23 @@ render() {
             <option value="Saude">Saúde</option>
           </select>
         </label>
-
-        <button
-          onClick={ this.handleClick }
-          type="button"
-        >
-          Adicionar despesa
-        </button>
+        {editar
+          ? (
+            <button
+              onClick={ this.handleEdit }
+              type="button"
+            >
+              Editar despesa
+            </button>
+          )
+          : (
+            <button
+              onClick={ this.handleClick }
+              type="button"
+            >
+              Adicionar despesa
+            </button>
+          )}
       </form>
       <table>
         <thead>
@@ -157,6 +199,14 @@ render() {
               <td>Real</td>
               <td>
                 <button
+                  type="button"
+                  data-testid="edit-btn"
+                  onClick={ this.handleBtnEdit }
+                  id={ gasto.id }
+                >
+                  Editar
+                </button>
+                <button
                   onClick={ this.handleDelete }
                   data-testid="delete-btn"
                   type="button"
@@ -178,11 +228,15 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchThunk: () => dispatch(currenciesFetchThunk()),
   dispatchExpenses: (payload) => dispatch(expensesFetchThunk(payload)),
   dispatchDelete: (id) => dispatch(deleteAction(id)),
+  dispatchBtnEdit: (idToEdit) => dispatch(buttonEdit(idToEdit)),
+  dispatchEditExpenses: (editExpenses) => dispatch(editAct(editExpenses)),
 });
 
 const mapStateToProps = (state) => ({
   moedas: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  editar: state.wallet.editor,
+  idToEdit: state.wallet.idToEdit,
 });
 
 Wallet.propTypes = {

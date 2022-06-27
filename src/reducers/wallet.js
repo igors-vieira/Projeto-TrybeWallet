@@ -1,5 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { CURRENCIES, EXPENSES_ACT, DELETE_ACT } from '../actions';
+import { CURRENCIES, EXPENSES_ACT, DELETE_ACT, BUTTON_EDIT, EDIT_ACT } from '../actions';
 
 const INTIAL_STATE = {
   currencies: [], // array de string
@@ -9,7 +9,7 @@ const INTIAL_STATE = {
 };
 
 const walletReducer = (state = INTIAL_STATE, action) => {
-  const { type, currencies, expenses, id } = action;
+  const { type, currencies, expenses, id, idToEdit, expense } = action;
   switch (type) {
   case CURRENCIES:
     return {
@@ -26,6 +26,23 @@ const walletReducer = (state = INTIAL_STATE, action) => {
     return {
       ...state,
       expenses: state.expenses.filter((gasto) => gasto.id !== Number(id)),
+    };
+  case BUTTON_EDIT:
+    return {
+      ...state,
+      editor: true,
+      idToEdit,
+    };
+  case EDIT_ACT:
+    return {
+      ...state,
+      expenses: state.expenses.map((gasto) => {
+        if (gasto.id === expense.id) {
+          return { ...gasto, ...expense };
+        }
+        return gasto;
+      }),
+      editor: false,
     };
   default:
     return state;
