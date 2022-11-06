@@ -33,34 +33,6 @@ export const editAct = (expense) => ({
   expense,
 });
 
-// export const editActThunk = (idEdited, obj) => (dispatch) => {
-//   const { despesa, moeda } = idEdited;
-//   fetch(URL_FETCH)
-//     .then((response) => response.json())
-//     .then((resp) => {
-//       if (obj.length) {
-//         const objForSave = [{
-//           ...idEdited,
-//           value: despesa,
-//           currency: moeda,
-//           exchangeRates: resp,
-//         }, ...obj];
-//         console.log('1 IF');
-//         dispatch(editAct(objForSave));
-//       } else {
-//         console.log('2 IF');
-//         const objForSave = [{
-//           ...idEdited,
-//           value: despesa,
-//           currency: moeda,
-//           exchangeRates: resp,
-//         }];
-//         dispatch(editAct(objForSave));
-//       }
-//     })
-//     .catch((err) => console.log(err));
-// };
-
 // MoedasThunk
 
 export const CURRENCIES = 'CURRENCIES';

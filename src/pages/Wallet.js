@@ -34,7 +34,6 @@ handleChange = ({ target }) => {
 
 handleClick = () => {
   const { dispatchExpenses, expenses } = this.props;
-  // const { description, despesa, method, moeda, tag } = this.state;
   const objSave = {
     id: expenses.length,
     ...this.state,
@@ -65,7 +64,6 @@ handleBtnEdit = ({ target }) => {
 handleEdit = () => {
   const { idToEdit, dispatchEditExpenses } = this.props;
   const { description, despesa, method, moeda, tag } = this.state;
-  // const arrOfExpenses = expenses.filter((gasto) => gasto.id !== idToEdit);
   const newIdEdited = {
     id: idToEdit,
     description,
@@ -75,13 +73,13 @@ handleEdit = () => {
     tag,
   };
   dispatchEditExpenses(newIdEdited);
-  // this.setState({
-  //   description: '',
-  //   despesa: 0,
-  //   method: '',
-  //   moeda: '',
-  //   tag: 'default',
-  // });
+  this.setState({
+    description: '',
+    despesa: 0,
+    method: '',
+    moeda: '',
+    tag: 'default',
+  });
 }
 
 render() {
