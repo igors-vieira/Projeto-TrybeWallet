@@ -27,8 +27,10 @@ componentDidMount() {
 handleChange = ({ target }) => {
   const { id, value } = target;
 
+  const newValue = value.replace(',', '.');
+
   this.setState({
-    [id]: value,
+    [id]: newValue,
   });
 }
 
